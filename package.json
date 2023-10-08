@@ -1,0 +1,32 @@
+{
+  "name": "ha-editor-formbuilder",
+  "version": "2023.10.0",
+  "description": "A form builder helper for Home Assistant custom card editor forms",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "yarn lint && webpack -c webpack.config.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/marcokreeft87/ha-editor-formbuilder.git"
+  },
+  "keywords": [
+    "Home",
+    "Assistant",
+    "Editor",
+    "Helper",
+    "Form",
+    "Builder"
+  ],
+  "author": "Marco Kreeft",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/marcokreeft87/ha-editor-formbuilder/issues"
+  },
+  "homepage": "https://github.com/marcokreeft87/ha-editor-formbuilder#readme",
+  "dependencies": {
+    "custom-card-helpers": "^1.9.0",
+    "lit-element": "^3.3.3"
+  }
+}
