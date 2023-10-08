@@ -23,4 +23,5 @@ jobs:
       - run: npm ci
       - uses: JS-DevTools/npm-publish@v2
         with:
+          access: public
           token: ${{ secrets.npm_token }}
