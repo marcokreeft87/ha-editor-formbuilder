@@ -1,10 +1,10 @@
 import { HomeAssistant, LovelaceCardConfig, fireEvent } from "custom-card-helpers";
-import { LitElement, TemplateResult, css, html, property } from "lit-element";
+import { LitElement, TemplateResult, css, html } from "lit-element";
 import { DropdownOption, FormControl, FormControlRow, FormControlType, ValueChangedEvent } from "./interfaces";
 
 export default class EditorForm extends LitElement {
-    @property({ attribute: false }) _hass: HomeAssistant;
-    @property({ attribute: false }) _config: LovelaceCardConfig;
+    _hass: HomeAssistant;
+    _config: LovelaceCardConfig;
 
     setConfig(config: LovelaceCardConfig) {
         this._config = config;
@@ -215,7 +215,7 @@ export default class EditorForm extends LitElement {
             }
             .side-by-side > .form-control {
                 width: 49%;
-                padding: 3px;
+                padding: 2px;
             }
             ha-textfield { 
                 width: 100%;
