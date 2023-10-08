@@ -10,6 +10,9 @@ class EditorForm extends lit_element_1.LitElement {
             label: hass.states[entity].attributes.friendly_name,
             value: entity
         });
+        this.renderFiller = () => {
+            return (0, lit_element_1.html) `<div class="form-control"></div>`;
+        };
         this.renderTextbox = (label, configValue) => {
             var _a;
             return (0, lit_element_1.html) `
@@ -134,6 +137,8 @@ class EditorForm extends lit_element_1.LitElement {
                 return this.renderSwitch(control.label, control.configValue);
             case interfaces_1.FormControlType.Textbox:
                 return this.renderTextbox(control.label, control.configValue);
+            case interfaces_1.FormControlType.Filler:
+                return this.renderFiller();
         }
         return (0, lit_element_1.html) ``;
     }
@@ -154,10 +159,22 @@ class EditorForm extends lit_element_1.LitElement {
             }
         }
         else if (target.configValue) {
-            this._config = {
-                ...this._config,
-                [target.configValue]: target.checked !== undefined || !(detail === null || detail === void 0 ? void 0 : detail.value) ? target.value || target.checked : target.checked || detail.value,
-            };
+            if (target.configValue.indexOf(".") > -1) {
+                const [domain, configValue] = target.configValue.split(".");
+                this._config = {
+                    ...this._config,
+                    [domain]: {
+                        ...this._config[domain],
+                        [configValue]: target.checked
+                    }
+                };
+            }
+            else {
+                this._config = {
+                    ...this._config,
+                    [target.configValue]: target.checked !== undefined || !(detail === null || detail === void 0 ? void 0 : detail.value) ? target.value || target.checked : target.checked || detail.value,
+                };
+            }
         }
         (0, custom_card_helpers_1.fireEvent)(this, "config-changed", {
             config: this._config

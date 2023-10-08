@@ -9,4 +9,5 @@ var FormControlType;
     FormControlType["Radio"] = "radio";
     FormControlType["Switch"] = "switch";
     FormControlType["Textbox"] = "textbox";
+    FormControlType["Filler"] = "filler";
 })(FormControlType || (exports.FormControlType = FormControlType = {}));

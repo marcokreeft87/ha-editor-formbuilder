@@ -25,7 +25,7 @@ export interface FormControlRow {
 }
 export interface FormControl {
     label?: string;
-    configValue: string;
+    configValue?: string;
     type: FormControlType;
     items?: DropdownOption[] | undefined;
     cssClass?: string;
@@ -36,5 +36,6 @@ export declare enum FormControlType {
     Checkboxes = "checkboxes",
     Radio = "radio",
     Switch = "switch",
-    Textbox = "textbox"
+    Textbox = "textbox",
+    Filler = "filler"
 }

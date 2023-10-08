@@ -13,6 +13,7 @@ export default class EditorForm extends LitElement {
     getEntitiesByDeviceClass(domain: string, device_class: string): DropdownOption[];
     formatList: (entity: string, hass: HomeAssistant) => DropdownOption;
     getDropdownOptionsFromEnum(enumValues: any): DropdownOption[];
+    renderFiller: () => TemplateResult<1>;
     renderTextbox: (label: string | undefined, configValue: string) => TemplateResult<1>;
     renderSwitch: (label: string | undefined, configValue: string) => TemplateResult<1>;
     renderDropdown: (label: string | undefined, configValue: string, items?: DropdownOption[]) => TemplateResult<1>;

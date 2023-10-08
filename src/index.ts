@@ -48,6 +48,8 @@ export default class EditorForm extends LitElement {
                 return this.renderSwitch(control.label, control.configValue);
             case FormControlType.Textbox:
                 return this.renderTextbox(control.label, control.configValue);
+            case FormControlType.Filler:
+                return this.renderFiller();
         }
 
         return html``;
@@ -71,9 +73,22 @@ export default class EditorForm extends LitElement {
         }
 
         else if (target.configValue) {
-            this._config = {
-                ...this._config,
-                [target.configValue]: target.checked !== undefined || !detail?.value ? target.value || target.checked : target.checked || detail.value,
+
+            if(target.configValue.indexOf(".") > -1) {
+                const [domain, configValue] = target.configValue.split(".");
+                this._config = {
+                    ...this._config,
+                    [domain]: {
+                        ...this._config[domain],
+                        [configValue]: target.checked
+                    }
+                }
+            }
+            else {
+                this._config = {
+                    ...this._config,
+                    [target.configValue]: target.checked !== undefined || !detail?.value ? target.value || target.checked : target.checked || detail.value,
+                }
             }
         }
         fireEvent(this, "config-changed", {
@@ -104,6 +119,10 @@ export default class EditorForm extends LitElement {
             options.push({ value: value, label: key } as DropdownOption);
         }
         return options;
+    }
+
+    renderFiller = () => {
+        return html`<div class="form-control"></div>`;
     }
 
     renderTextbox = (label: string | undefined, configValue: string) => {
