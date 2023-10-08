@@ -1,12 +1,15 @@
 {
   "name": "@marcokreeft/ha-editor-formbuilder",
-  "version": "2023.10.0",
+  "version": "2023.10.1",
   "description": "A form builder helper for Home Assistant custom card editor forms",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "files": [
     "/dist"
   ],
+  "scripts": {
+    "test": "echo \"Error: no test specified\""
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/marcokreeft87/ha-editor-formbuilder.git"
