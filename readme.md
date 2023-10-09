@@ -6,7 +6,7 @@
 Run the following command to install the Custom Card Editor Form Builder using npm:
 
 ```
-npm install -g ha-editor-formbuilder
+npm install -g @marcokreeft/ha-editor-formbuilder
 ```
 
 Once the installation is complete, you can use the tool to create and customize card forms.
