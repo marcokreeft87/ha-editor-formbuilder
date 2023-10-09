@@ -200,7 +200,7 @@ export default class EditorForm extends LitElement {
                     <ha-checkbox
                         id="${configValue}_${item.value}"
                         name="${configValue}[]"
-                        .checked="${this._config[configValue].indexOf(item.value) > -1}"
+                        .checked="${this._config[configValue]?.indexOf(item.value) > -1}"
                         .configValue="${configValue}"
                         .value="${item.value}"
                         @change="${this._valueChanged}"

@@ -80,12 +80,13 @@ class EditorForm extends lit_element_1.LitElement {
             return (0, lit_element_1.html) `
             <label>${label}</label>
             ${items.map(item => {
+                var _a;
                 return (0, lit_element_1.html) `                
                 <div class="form-control">
                     <ha-checkbox
                         id="${configValue}_${item.value}"
                         name="${configValue}[]"
-                        .checked="${this._config[configValue].indexOf(item.value) > -1}"
+                        .checked="${((_a = this._config[configValue]) === null || _a === void 0 ? void 0 : _a.indexOf(item.value)) > -1}"
                         .configValue="${configValue}"
                         .value="${item.value}"
                         @change="${this._valueChanged}"
