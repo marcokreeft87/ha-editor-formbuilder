@@ -1,6 +1,7 @@
 import { HomeAssistant, LovelaceCardConfig, fireEvent } from "custom-card-helpers";
 import { LitElement, TemplateResult, css, html } from "lit-element";
-import { DropdownOption, FormControl, FormControlRow, FormControlType, ValueChangedEvent } from "./interfaces";
+import { FormControl, FormControlRow, FormControlType, ValueChangedEvent } from "./interfaces";
+import { renderCheckboxes, renderDropdown, renderFiller, renderRadio, renderSwitch, renderTextbox } from "./utils/controls";
 
 export default class EditorForm extends LitElement {
     _hass: HomeAssistant;
@@ -30,32 +31,25 @@ export default class EditorForm extends LitElement {
         `;
     }     
 
-    renderControl(control: FormControl): TemplateResult {
-        switch (control.type) {
-            case FormControlType.Dropdown:
-                return this.renderDropdown(control.label, control.configValue, control.items);
-            case FormControlType.Radio:
-                if(control.items === undefined) {
-                    throw new Error("Radio control must have items defined");
-                }
-                return this.renderRadio(control.label, control.configValue, control.items);
-            case FormControlType.Checkboxes:
-                if(control.items === undefined) {
-                    throw new Error("Radio control must have items defined");
-                }
-                return this.renderCheckboxes(control.label, control.configValue, control.items);
-            case FormControlType.Switch:
-                return this.renderSwitch(control.label, control.configValue);
-            case FormControlType.Textbox:
-                return this.renderTextbox(control.label, control.configValue);
-            case FormControlType.Filler:
-                return this.renderFiller();
-        }
+    controlRenderers = {
+        [FormControlType.Dropdown]: renderDropdown,
+        [FormControlType.Radio]: renderRadio,
+        [FormControlType.Checkboxes]: renderCheckboxes,
+        [FormControlType.EntityDropdown]: renderDropdown,
+        [FormControlType.Switch]: renderSwitch,
+        [FormControlType.Textbox]: renderTextbox,
+        [FormControlType.Filler]: renderFiller,
+    };
 
-        return html``;
+    renderControl(control: FormControl): TemplateResult {
+        const renderer = this.controlRenderers[control.type];
+        if (!renderer) {
+            throw new Error(`Unsupported control type: ${control.type}`);
+        }
+        return renderer(this, control);
     }
 
-    private _valueChanged(ev: ValueChangedEvent): void {
+    _valueChanged(ev: ValueChangedEvent): void {
         if (!this._config || !this._hass) {
             return;
         }
@@ -94,123 +88,6 @@ export default class EditorForm extends LitElement {
         fireEvent(this, "config-changed", {
             config: this._config
         });
-    }
-
-    getEntitiesByDomain(domain: string): DropdownOption[] {
-        return Object.keys(this._hass.states)
-            .filter((eid: string) => eid.substr(0, eid.indexOf(".")) === domain)
-            .map((item) => this.formatList(item, this._hass));
-    }
-
-    getEntitiesByDeviceClass(domain: string, device_class: string): DropdownOption[] {
-        return Object.keys(this._hass.states)
-            .filter((eid: string) => eid.substr(0, eid.indexOf(".")) === domain && this._hass.states[eid].attributes.device_class === device_class)
-            .map((item) => this.formatList(item, this._hass));
-    }
-
-    formatList = (entity: string, hass: HomeAssistant): DropdownOption => ({
-        label: hass.states[entity].attributes.friendly_name,
-        value: entity
-    });
-
-    getDropdownOptionsFromEnum(enumValues: any): DropdownOption[] {
-        const options: DropdownOption[] = [];
-        for (const [key, value] of Object.entries(enumValues)) {
-            options.push({ value: value, label: key } as DropdownOption);
-        }
-        return options;
-    }
-
-    renderFiller = () => {
-        return html`<div class="form-control"></div>`;
-    }
-
-    renderTextbox = (label: string | undefined, configValue: string) => {
-        return html`
-        <div class="form-control">
-            <ha-textfield
-                label="${label}"
-                .value="${this._config[configValue] ?? ''}"
-                .configValue="${configValue}"
-                @change="${this._valueChanged}">
-            </ha-textfield>
-        </div>
-        `;
-    }
-
-    renderSwitch = (label: string | undefined, configValue: string) => {
-        return html`
-        <div class="form-control">
-            <ha-switch
-                id="${configValue}"
-                name="${configValue}"
-                .checked="${this._config[configValue]}"
-                .configValue="${configValue}"
-                @change="${this._valueChanged}"
-            >
-            </ha-switch>
-            <label for="${configValue}">${label}</label>
-        </div>
-        `;
-    }
-
-    renderDropdown = (label: string | undefined, configValue: string, items?: DropdownOption[]) => {
-        return html`  
-        <div class="form-control">
-            <ha-combo-box
-                label="${label}"
-                .value="${this._config[configValue]}"
-                .configValue="${configValue}"
-                .items="${items}"
-                @value-changed="${this._valueChanged}"
-                @change=${this._valueChanged}
-            ></ha-combo-box>
-        </div>
-          `;
-    }
-
-    renderRadio = (label: string | undefined, configValue: string, items: DropdownOption[]) => {
-        return html`
-            <div class="form-control">
-                <label>${label}</label>
-                ${items.map(item => {
-                    return html`
-                        <ha-radio
-                            id="${configValue}_${item.value}"
-                            name="${configValue}"
-                            .checked="${this._config[configValue] === item.value}"
-                            .configValue="${configValue}"
-                            .value="${item.value}"
-                            @change="${this._valueChanged}"
-                        >
-                        </ha-radio>
-                        <label for="${configValue}_${item.value}">${item.label}</label>
-                    `;
-                })}
-            </div>
-          `;
-    }
-
-    renderCheckboxes = (label: string | undefined, configValue: string, items: DropdownOption[]) => {
-        return html`
-            <label>${label}</label>
-            ${items.map(item => {
-                return html`                
-                <div class="form-control">
-                    <ha-checkbox
-                        id="${configValue}_${item.value}"
-                        name="${configValue}[]"
-                        .checked="${this._config[configValue]?.indexOf(item.value) > -1}"
-                        .configValue="${configValue}"
-                        .value="${item.value}"
-                        @change="${this._valueChanged}"
-                    >
-                    </ha-checkbox>
-                    <label for="${configValue}_${item.value}">${item.label}</label>
-                </div>
-                `;
-            })}
-          `;
     }
 
     static get styles() {

@@ -29,6 +29,7 @@ export interface FormControl {
     type: FormControlType;
     items?: DropdownOption[] | undefined;
     cssClass?: string;
+    domain?: string;
 }
 export declare enum FormControlType {
     Dropdown = "dropdown",
@@ -37,5 +38,6 @@ export declare enum FormControlType {
     Radio = "radio",
     Switch = "switch",
     Textbox = "textbox",
-    Filler = "filler"
+    Filler = "filler",
+    EntityDropdown = "entity-dropdown"
 }

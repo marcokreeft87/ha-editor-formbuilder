@@ -20,8 +20,12 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: "18"
+      - name: Check for version change
+        id: version-check
+        run: echo ::set-output name=version::$(jq -r .version package.json)
       - run: npm ci
       - uses: JS-DevTools/npm-publish@v2
         with:
           access: public
           token: ${{ secrets.npm_token }}
+        if: steps.version-check.outputs.version != ${{ github.event.before }}.version
