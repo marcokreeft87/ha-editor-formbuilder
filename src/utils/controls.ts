@@ -52,7 +52,7 @@ export const renderSwitch = (card: EditorForm, control: FormControl) => {
 }
 
 export const renderDropdown = (card: EditorForm, control: FormControl) => {
-    const items = getEntitiesByDomain(card._hass, control.domain)
+    const items = control.items ?? getEntitiesByDomain(card._hass, control.domain)
     return html`  
     <div class="form-control">
         <ha-combo-box

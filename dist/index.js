@@ -25,18 +25,18 @@ class EditorForm extends lit_element_1.LitElement {
     }
     renderForm(formRows) {
         return (0, lit_element_1.html) `
-        <div class="card-config">
-            ${formRows.map(row => {
+            <div class="card-config">
+                ${formRows.map(row => {
             const cssClass = row.cssClass ? `form-row ${row.cssClass}` : "form-row";
-            return (0, lit_element_1.html) `
-                    <div class="${cssClass}">
-                        <label>${row.label}</label>
-                        ${row.controls.map(control => this.renderControl(control))}
-                    </div>
-                    `;
+            return row.hidden ? '' : (0, lit_element_1.html) `
+                        <div class="${cssClass}">
+                            <label>${row.label}</label>
+                            ${row.controls.map(control => this.renderControl(control))}
+                        </div>
+                        `;
         })}            
-        </div>
-        `;
+            </div>
+            `;
     }
     renderControl(control) {
         const renderer = this.controlRenderers[control.type];
@@ -80,8 +80,12 @@ class EditorForm extends lit_element_1.LitElement {
             }
         }
         (0, custom_card_helpers_1.fireEvent)(this, "config-changed", {
-            config: this._config
+            config: this._config,
+        }, {
+            bubbles: true,
+            composed: true,
         });
+        this.requestUpdate("_config");
     }
     static get styles() {
         return (0, lit_element_1.css) `

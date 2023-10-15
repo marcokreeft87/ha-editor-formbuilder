@@ -54,7 +54,8 @@ const renderSwitch = (card, control) => {
 };
 exports.renderSwitch = renderSwitch;
 const renderDropdown = (card, control) => {
-    const items = (0, entities_1.getEntitiesByDomain)(card._hass, control.domain);
+    var _a;
+    const items = (_a = control.items) !== null && _a !== void 0 ? _a : (0, entities_1.getEntitiesByDomain)(card._hass, control.domain);
     return (0, lit_element_1.html) `  
     <div class="form-control">
         <ha-combo-box

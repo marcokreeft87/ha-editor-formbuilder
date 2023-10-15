@@ -22,6 +22,7 @@ export interface FormControlRow {
     label?: string;
     controls: FormControl[];
     cssClass?: string;
+    hidden?: boolean;
 }
 export interface FormControl {
     label?: string;

@@ -17,19 +17,19 @@ export default class EditorForm extends LitElement {
 
     renderForm(formRows: FormControlRow[]) {
         return html`
-        <div class="card-config">
-            ${formRows.map(row => {
-                const cssClass = row.cssClass ? `form-row ${row.cssClass}` : "form-row";
-                return html`
-                    <div class="${cssClass}">
-                        <label>${row.label}</label>
-                        ${row.controls.map(control => this.renderControl(control))}
-                    </div>
-                    `;
-                })}            
-        </div>
-        `;
-    }     
+            <div class="card-config">
+                ${formRows.map(row => {
+            const cssClass = row.cssClass ? `form-row ${row.cssClass}` : "form-row";
+            return row.hidden ? '' : html`
+                        <div class="${cssClass}">
+                            <label>${row.label}</label>
+                            ${row.controls.map(control => this.renderControl(control))}
+                        </div>
+                        `;
+        })}            
+            </div>
+            `;
+    }
 
     controlRenderers = {
         [FormControlType.Dropdown]: renderDropdown,
@@ -68,7 +68,7 @@ export default class EditorForm extends LitElement {
 
         else if (target.configValue) {
 
-            if(target.configValue.indexOf(".") > -1) {
+            if (target.configValue.indexOf(".") > -1) {
                 const [domain, configValue] = target.configValue.split(".");
                 this._config = {
                     ...this._config,
@@ -85,9 +85,15 @@ export default class EditorForm extends LitElement {
                 }
             }
         }
+
         fireEvent(this, "config-changed", {
-            config: this._config
+            config: this._config,
+        }, {
+            bubbles: true,
+            composed: true,
         });
+
+        this.requestUpdate("_config");
     }
 
     static get styles() {
