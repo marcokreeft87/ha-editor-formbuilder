@@ -1,7 +1,7 @@
 import { HomeAssistant, LovelaceCardConfig, fireEvent } from "custom-card-helpers";
 import { LitElement, TemplateResult, css, html } from "lit-element";
 import { FormControl, FormControlRow, FormControlType, ValueChangedEvent } from "./interfaces";
-import { renderCheckboxes, renderDropdown, renderFiller, renderRadio, renderSwitch, renderTextbox } from "./utils/controls";
+import { renderCheckboxes, renderDropdown, renderEntityDropdown, renderFiller, renderRadio, renderSwitch, renderTextbox } from "./utils/controls";
 
 export default class EditorForm extends LitElement {
     _hass: HomeAssistant;
@@ -21,7 +21,8 @@ export default class EditorForm extends LitElement {
                 ${formRows.map(row => {
             const cssClass = row.cssClass ? `form-row ${row.cssClass}` : "form-row";
             return row.hidden ? '' : html`
-                        <div class="${cssClass}">
+                        <div class="${cssClass}">                            
+                            ${row.buttons?.map(button => html`<button @click="${button.action}">${button.label}</button>`)}
                             <label>${row.label}</label>
                             ${row.controls.map(control => this.renderControl(control))}
                         </div>
@@ -35,7 +36,7 @@ export default class EditorForm extends LitElement {
         [FormControlType.Dropdown]: renderDropdown,
         [FormControlType.Radio]: renderRadio,
         [FormControlType.Checkboxes]: renderCheckboxes,
-        [FormControlType.EntityDropdown]: renderDropdown,
+        [FormControlType.EntityDropdown]: renderEntityDropdown,
         [FormControlType.Switch]: renderSwitch,
         [FormControlType.Textbox]: renderTextbox,
         [FormControlType.Filler]: renderFiller,
@@ -65,10 +66,29 @@ export default class EditorForm extends LitElement {
                 this._config[target.configValue] = [...this._config[target.configValue].slice(0, index), ...this._config[target.configValue].slice(index + 1)];
             }
         }
-
         else if (target.configValue) {
 
-            if (target.configValue.indexOf(".") > -1) {
+            const match = target.configValue.match(/\[(.*?)\]/);
+            if (match) {
+                const index = match[1];
+                const configValue = target.configValue.replace(/\[(.*?)\]/, '');
+                const [domain, entity] = configValue.split(".");
+                const info_entities = this._config[domain];
+                if (!info_entities) {
+                    return;
+                }
+                
+                if (info_entities[index]) {
+                    info_entities[index][entity] = target.checked !== undefined || !(detail === null || detail === void 0 ? void 0 : detail.value) ? target.value || target.checked : target.checked || detail.value;
+                }
+                else {
+                    info_entities.push({
+                        [entity]: target.checked !== undefined || !(detail === null || detail === void 0 ? void 0 : detail.value) ? target.value || target.checked : target.checked || detail.value
+                    });
+                }
+                
+            }
+            else if (target.configValue.indexOf(".") > -1) {
                 const [domain, configValue] = target.configValue.split(".");
                 this._config = {
                     ...this._config,

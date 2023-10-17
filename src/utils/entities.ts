@@ -1,6 +1,11 @@
 import { HomeAssistant } from "custom-card-helpers";
 import { DropdownOption } from "../interfaces";
 
+export const getAllEntities = (hass: HomeAssistant): DropdownOption[] => {
+    return Object.keys(hass.states)
+        .map((item) => formatList(item, hass));
+}
+
 export const getEntitiesByDomain = (hass: HomeAssistant, domain: string): DropdownOption[] => {
     return Object.keys(hass.states)
         .filter((eid: string) => eid.substr(0, eid.indexOf(".")) === domain)

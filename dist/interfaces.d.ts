@@ -23,6 +23,7 @@ export interface FormControlRow {
     controls: FormControl[];
     cssClass?: string;
     hidden?: boolean;
+    buttons?: FornButton[];
 }
 export interface FormControl {
     label?: string;
@@ -31,6 +32,12 @@ export interface FormControl {
     items?: DropdownOption[] | undefined;
     cssClass?: string;
     domain?: string;
+    value?: string;
+}
+export interface FornButton {
+    icon: string;
+    label: string;
+    action: Function;
 }
 export declare enum FormControlType {
     Dropdown = "dropdown",

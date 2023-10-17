@@ -1,6 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getDropdownOptionsFromEnum = exports.formatList = exports.getEntitiesByDeviceClass = exports.getEntitiesByDomain = void 0;
+exports.getDropdownOptionsFromEnum = exports.formatList = exports.getEntitiesByDeviceClass = exports.getEntitiesByDomain = exports.getAllEntities = void 0;
+const getAllEntities = (hass) => {
+    return Object.keys(hass.states)
+        .map((item) => (0, exports.formatList)(item, hass));
+};
+exports.getAllEntities = getAllEntities;
 const getEntitiesByDomain = (hass, domain) => {
     return Object.keys(hass.states)
         .filter((eid) => eid.substr(0, eid.indexOf(".")) === domain)

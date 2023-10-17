@@ -11,7 +11,7 @@ class EditorForm extends lit_element_1.LitElement {
             [interfaces_1.FormControlType.Dropdown]: controls_1.renderDropdown,
             [interfaces_1.FormControlType.Radio]: controls_1.renderRadio,
             [interfaces_1.FormControlType.Checkboxes]: controls_1.renderCheckboxes,
-            [interfaces_1.FormControlType.EntityDropdown]: controls_1.renderDropdown,
+            [interfaces_1.FormControlType.EntityDropdown]: controls_1.renderEntityDropdown,
             [interfaces_1.FormControlType.Switch]: controls_1.renderSwitch,
             [interfaces_1.FormControlType.Textbox]: controls_1.renderTextbox,
             [interfaces_1.FormControlType.Filler]: controls_1.renderFiller,
@@ -27,9 +27,11 @@ class EditorForm extends lit_element_1.LitElement {
         return (0, lit_element_1.html) `
             <div class="card-config">
                 ${formRows.map(row => {
+            var _a;
             const cssClass = row.cssClass ? `form-row ${row.cssClass}` : "form-row";
             return row.hidden ? '' : (0, lit_element_1.html) `
-                        <div class="${cssClass}">
+                        <div class="${cssClass}">                            
+                            ${(_a = row.buttons) === null || _a === void 0 ? void 0 : _a.map(button => (0, lit_element_1.html) `<button @click="${button.action}">${button.label}</button>`)}
                             <label>${row.label}</label>
                             ${row.controls.map(control => this.renderControl(control))}
                         </div>
@@ -62,7 +64,25 @@ class EditorForm extends lit_element_1.LitElement {
             }
         }
         else if (target.configValue) {
-            if (target.configValue.indexOf(".") > -1) {
+            const match = target.configValue.match(/\[(.*?)\]/);
+            if (match) {
+                const index = match[1];
+                const configValue = target.configValue.replace(/\[(.*?)\]/, '');
+                const [domain, entity] = configValue.split(".");
+                const info_entities = this._config[domain];
+                if (!info_entities) {
+                    return;
+                }
+                if (info_entities[index]) {
+                    info_entities[index][entity] = target.checked !== undefined || !(detail === null || detail === void 0 ? void 0 : detail.value) ? target.value || target.checked : target.checked || detail.value;
+                }
+                else {
+                    info_entities.push({
+                        [entity]: target.checked !== undefined || !(detail === null || detail === void 0 ? void 0 : detail.value) ? target.value || target.checked : target.checked || detail.value
+                    });
+                }
+            }
+            else if (target.configValue.indexOf(".") > -1) {
                 const [domain, configValue] = target.configValue.split(".");
                 this._config = {
                     ...this._config,

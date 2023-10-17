@@ -1,25 +1,16 @@
 import { html } from "lit-element";
 import { FormControl } from "../interfaces";
 import EditorForm from "../index";
-import { getEntitiesByDomain } from "./entities";
+import { getAllEntities, getEntitiesByDomain } from "./entities";
 
 export const renderFiller = () => {
     return html`<div class="form-control"></div>`;
 }
 
 export const renderEntityDropdown = (card: EditorForm, control: FormControl) => {
-    return html`
-    <div class="form-control">
-        <ha-entity-picker
-            label="${control.label}"
-            .value="${card._config[control.configValue] ?? ''}"
-            .configValue="${control.configValue}"
-            .hass="${card._hass}"
-            domain-filter="${control.domain}"
-            @change="${card._valueChanged}">
-        </ha-entity-picker>
-    </div>
-    `;
+    let entities = control.domain ? getEntitiesByDomain(card._hass, control.domain) : getAllEntities(card._hass);
+    entities = entities.sort((a, b) => a.label?.localeCompare(b.label ?? '') ?? 0);
+    return renderDropdown(card, { ...control, items: entities });
 }
 
 export const renderTextbox = (card: EditorForm, control: FormControl) => {
@@ -27,7 +18,7 @@ export const renderTextbox = (card: EditorForm, control: FormControl) => {
     <div class="form-control">
         <ha-textfield
             label="${control.label}"
-            .value="${card._config[control.configValue] ?? ''}"
+            .value="${control.value ?? card._config[control.configValue] ?? ''}"
             .configValue="${control.configValue}"
             @change="${card._valueChanged}">
         </ha-textfield>
@@ -57,7 +48,7 @@ export const renderDropdown = (card: EditorForm, control: FormControl) => {
     <div class="form-control">
         <ha-combo-box
             label="${control.label}"
-            .value="${card._config[control.configValue]}"
+            .value="${control.value ?? card._config[control.configValue]}"
             .configValue="${control.configValue}"
             .items="${items}"
             @value-changed="${card._valueChanged}"
