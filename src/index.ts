@@ -22,8 +22,8 @@ export default class EditorForm extends LitElement {
             const cssClass = row.cssClass ? `form-row ${row.cssClass}` : "form-row";
             return row.hidden ? '' : html`
                         <div class="${cssClass}">                            
-                            ${row.buttons?.map(button => html`<button @click="${button.action}">${button.label}</button>`)}
                             <label>${row.label}</label>
+                            ${row.buttons?.map(button => html`<button @click="${button.action}">${button.label}</button>`)}
                             ${row.controls.map(control => this.renderControl(control))}
                         </div>
                         `;

@@ -31,8 +31,8 @@ class EditorForm extends lit_element_1.LitElement {
             const cssClass = row.cssClass ? `form-row ${row.cssClass}` : "form-row";
             return row.hidden ? '' : (0, lit_element_1.html) `
                         <div class="${cssClass}">                            
-                            ${(_a = row.buttons) === null || _a === void 0 ? void 0 : _a.map(button => (0, lit_element_1.html) `<button @click="${button.action}">${button.label}</button>`)}
                             <label>${row.label}</label>
+                            ${(_a = row.buttons) === null || _a === void 0 ? void 0 : _a.map(button => (0, lit_element_1.html) `<button @click="${button.action}">${button.label}</button>`)}
                             ${row.controls.map(control => this.renderControl(control))}
                         </div>
                         `;

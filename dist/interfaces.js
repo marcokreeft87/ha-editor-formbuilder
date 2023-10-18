@@ -11,4 +11,4 @@ var FormControlType;
     FormControlType["Textbox"] = "textbox";
     FormControlType["Filler"] = "filler";
     FormControlType["EntityDropdown"] = "entity-dropdown";
-})(FormControlType = exports.FormControlType || (exports.FormControlType = {}));
+})(FormControlType || (exports.FormControlType = FormControlType = {}));
