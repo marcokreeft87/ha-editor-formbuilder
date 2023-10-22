@@ -7,6 +7,7 @@ const controls_1 = require("./utils/controls");
 class EditorForm extends lit_element_1.LitElement {
     constructor() {
         super(...arguments);
+        this.selectedTabIndex = 0;
         this.controlRenderers = {
             [interfaces_1.FormControlType.Dropdown]: controls_1.renderDropdown,
             [interfaces_1.FormControlType.Radio]: controls_1.renderRadio,
@@ -26,17 +27,29 @@ class EditorForm extends lit_element_1.LitElement {
     renderForm(formRows) {
         return (0, lit_element_1.html) `
             <div class="card-config">
-                ${formRows.map(row => {
-            var _a;
-            const cssClass = row.cssClass ? `form-row ${row.cssClass}` : "form-row";
-            return row.hidden ? '' : (0, lit_element_1.html) `
-                        <div class="${cssClass}">                            
-                            <label>${row.label}</label>
-                            ${(_a = row.buttons) === null || _a === void 0 ? void 0 : _a.map(button => (0, lit_element_1.html) `<button @click="${button.action}">${button.label}</button>`)}
-                            ${row.controls.map(control => this.renderControl(control))}
-                        </div>
-                        `;
-        })}            
+                ${formRows.map(row => this.renderRow(row))}            
+            </div>
+            `;
+    }
+    renderRow(row) {
+        var _a, _b, _c, _d;
+        const cssClass = row.cssClass ? `form-row ${row.cssClass}` : "form-row";
+        return row.hidden ? '' : (0, lit_element_1.html) `
+            <div class="${cssClass}">                            
+                <label>${row.label}</label>
+                ${(_a = row.buttons) === null || _a === void 0 ? void 0 : _a.map(button => (0, lit_element_1.html) `<button @click="${button.action}">${button.label}</button>`)}
+                ${(_b = row.controls) === null || _b === void 0 ? void 0 : _b.map(control => this.renderControl(control))}
+                ${row.tabs ?
+            (0, lit_element_1.html) `<mwc-tab-bar @MDCTabBar:activated=${(ev) => {
+                this.selectedTabIndex = ev.detail.index;
+                console.log(this.selectedTabIndex);
+                this.requestUpdate();
+            }}>
+                            ${row.tabs.map(tab => (0, lit_element_1.html) `<mwc-tab label="${tab.label}"></mwc-tab>`)}
+                        </mwc-tab-bar>
+                        <section>
+                        ${(_d = (_c = row.tabs.find((_, index) => index == this.selectedTabIndex)) === null || _c === void 0 ? void 0 : _c.rows) === null || _d === void 0 ? void 0 : _d.map(row => (0, lit_element_1.html) `<article>${this.renderRow(row)}</article>`)}                        
+                    </section>` : (0, lit_element_1.html) ``}    
             </div>
             `;
     }

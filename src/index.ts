@@ -1,11 +1,12 @@
 import { HomeAssistant, LovelaceCardConfig, fireEvent } from "custom-card-helpers";
 import { LitElement, TemplateResult, css, html } from "lit-element";
-import { FormControl, FormControlRow, FormControlType, ValueChangedEvent } from "./interfaces";
+import { FormControl, FormControlRow, FormControlType, ValueChangedEvent, mwcTabBarEvent } from "./interfaces";
 import { renderCheckboxes, renderDropdown, renderEntityDropdown, renderFiller, renderRadio, renderSwitch, renderTextbox } from "./utils/controls";
 
 export default class EditorForm extends LitElement {
     _hass: HomeAssistant;
     _config: LovelaceCardConfig;
+    protected selectedTabIndex = 0;
 
     setConfig(config: LovelaceCardConfig) {
         this._config = config;
@@ -18,16 +19,7 @@ export default class EditorForm extends LitElement {
     renderForm(formRows: FormControlRow[]) {
         return html`
             <div class="card-config">
-                ${formRows.map(row => {
-            const cssClass = row.cssClass ? `form-row ${row.cssClass}` : "form-row";
-            return row.hidden ? '' : html`
-                        <div class="${cssClass}">                            
-                            <label>${row.label}</label>
-                            ${row.buttons?.map(button => html`<button @click="${button.action}">${button.label}</button>`)}
-                            ${row.controls.map(control => this.renderControl(control))}
-                        </div>
-                        `;
-        })}            
+                ${formRows.map(row => this.renderRow(row))}            
             </div>
             `;
     }
@@ -41,6 +33,29 @@ export default class EditorForm extends LitElement {
         [FormControlType.Textbox]: renderTextbox,
         [FormControlType.Filler]: renderFiller,
     };
+
+    renderRow(row: FormControlRow) {
+        const cssClass = row.cssClass ? `form-row ${row.cssClass}` : "form-row";
+        return row.hidden ? '' : html`
+            <div class="${cssClass}">                            
+                <label>${row.label}</label>
+                ${row.buttons?.map(button => html`<button @click="${button.action}">${button.label}</button>`)}
+                ${row.controls?.map(control => this.renderControl(control))}
+                ${row.tabs ? 
+                    html`<mwc-tab-bar @MDCTabBar:activated=${(ev: mwcTabBarEvent) => {
+                        this.selectedTabIndex = ev.detail.index;
+                        console.log(this.selectedTabIndex);
+
+                        this.requestUpdate();
+                    }}>
+                            ${row.tabs.map(tab => html`<mwc-tab label="${tab.label}"></mwc-tab>`)}
+                        </mwc-tab-bar>
+                        <section>
+                        ${row.tabs.find((_, index) => index == this.selectedTabIndex)?.rows?.map(row => html`<article>${this.renderRow(row)}</article>`)}                        
+                    </section>` : html``}    
+            </div>
+            `;
+    }
 
     renderControl(control: FormControl): TemplateResult {
         const renderer = this.controlRenderers[control.type];

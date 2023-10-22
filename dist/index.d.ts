@@ -4,6 +4,7 @@ import { FormControl, FormControlRow, ValueChangedEvent } from "./interfaces";
 export default class EditorForm extends LitElement {
     _hass: HomeAssistant;
     _config: LovelaceCardConfig;
+    protected selectedTabIndex: number;
     setConfig(config: LovelaceCardConfig): void;
     set hass(hass: HomeAssistant);
     renderForm(formRows: FormControlRow[]): TemplateResult<1>;
@@ -16,6 +17,7 @@ export default class EditorForm extends LitElement {
         textbox: (card: EditorForm, control: FormControl) => TemplateResult<1>;
         filler: () => TemplateResult<1>;
     };
+    renderRow(row: FormControlRow): any;
     renderControl(control: FormControl): TemplateResult;
     _valueChanged(ev: ValueChangedEvent): void;
     static get styles(): import("lit-element").CSSResult;

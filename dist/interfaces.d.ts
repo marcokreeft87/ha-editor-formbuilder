@@ -20,10 +20,15 @@ export interface ValueChangedEvent {
 }
 export interface FormControlRow {
     label?: string;
-    controls: FormControl[];
+    controls?: FormControl[];
+    tabs?: FormControlTab[];
     cssClass?: string;
     hidden?: boolean;
     buttons?: FornButton[];
+}
+export interface FormControlTab {
+    label: string;
+    rows: FormControlRow[];
 }
 export interface FormControl {
     label?: string;
@@ -48,4 +53,9 @@ export declare enum FormControlType {
     Textbox = "textbox",
     Filler = "filler",
     EntityDropdown = "entity-dropdown"
+}
+export interface mwcTabBarEvent extends Event {
+    detail: {
+        index: number;
+    };
 }
