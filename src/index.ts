@@ -1,7 +1,7 @@
 import { HomeAssistant, LovelaceCardConfig, fireEvent } from "custom-card-helpers";
 import { LitElement, TemplateResult, css, html } from "lit-element";
 import { FormControl, FormControlRow, FormControlType, ValueChangedEvent, mwcTabBarEvent } from "./interfaces";
-import { renderCheckboxes, renderDropdown, renderEntityDropdown, renderFiller, renderRadio, renderSwitch, renderTextbox } from "./utils/controls";
+import { renderCheckboxes, renderDropdown, renderEntityDropdown, renderFiller, renderRadio, renderSwitch, renderTextbox, renderIconPicker } from "./utils/controls";
 
 export default class EditorForm extends LitElement {
     _hass: HomeAssistant;
@@ -32,6 +32,7 @@ export default class EditorForm extends LitElement {
         [FormControlType.Switch]: renderSwitch,
         [FormControlType.Textbox]: renderTextbox,
         [FormControlType.Filler]: renderFiller,
+        [FormControlType.Icon]: renderIconPicker,
     };
 
     renderRow(row: FormControlRow) {
@@ -44,8 +45,6 @@ export default class EditorForm extends LitElement {
                 ${row.tabs ? 
                     html`<mwc-tab-bar @MDCTabBar:activated=${(ev: mwcTabBarEvent) => {
                         this.selectedTabIndex = ev.detail.index;
-                        console.log(this.selectedTabIndex);
-
                         this.requestUpdate();
                     }}>
                             ${row.tabs.map(tab => html`<mwc-tab label="${tab.label}"></mwc-tab>`)}

@@ -10,5 +10,6 @@ var FormControlType;
     FormControlType["Switch"] = "switch";
     FormControlType["Textbox"] = "textbox";
     FormControlType["Filler"] = "filler";
+    FormControlType["Icon"] = "icon";
     FormControlType["EntityDropdown"] = "entity-dropdown";
 })(FormControlType || (exports.FormControlType = FormControlType = {}));

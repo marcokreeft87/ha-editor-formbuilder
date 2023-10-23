@@ -16,6 +16,7 @@ class EditorForm extends lit_element_1.LitElement {
             [interfaces_1.FormControlType.Switch]: controls_1.renderSwitch,
             [interfaces_1.FormControlType.Textbox]: controls_1.renderTextbox,
             [interfaces_1.FormControlType.Filler]: controls_1.renderFiller,
+            [interfaces_1.FormControlType.Icon]: controls_1.renderIconPicker,
         };
     }
     setConfig(config) {
@@ -42,7 +43,6 @@ class EditorForm extends lit_element_1.LitElement {
                 ${row.tabs ?
             (0, lit_element_1.html) `<mwc-tab-bar @MDCTabBar:activated=${(ev) => {
                 this.selectedTabIndex = ev.detail.index;
-                console.log(this.selectedTabIndex);
                 this.requestUpdate();
             }}>
                             ${row.tabs.map(tab => (0, lit_element_1.html) `<mwc-tab label="${tab.label}"></mwc-tab>`)}

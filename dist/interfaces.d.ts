@@ -52,6 +52,7 @@ export declare enum FormControlType {
     Switch = "switch",
     Textbox = "textbox",
     Filler = "filler",
+    Icon = "icon",
     EntityDropdown = "entity-dropdown"
 }
 export interface mwcTabBarEvent extends Event {

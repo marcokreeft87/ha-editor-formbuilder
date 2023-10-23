@@ -16,6 +16,7 @@ export default class EditorForm extends LitElement {
         switch: (card: EditorForm, control: FormControl) => TemplateResult<1>;
         textbox: (card: EditorForm, control: FormControl) => TemplateResult<1>;
         filler: () => TemplateResult<1>;
+        icon: (card: EditorForm, control: FormControl) => TemplateResult<1>;
     };
     renderRow(row: FormControlRow): any;
     renderControl(control: FormControl): TemplateResult;

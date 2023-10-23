@@ -3,6 +3,19 @@ import { FormControl } from "../interfaces";
 import EditorForm from "../index";
 import { getAllEntities, getEntitiesByDomain } from "./entities";
 
+export const renderIconPicker = (card: EditorForm, control: FormControl) => {
+    return html`
+    <div class="form-control">
+        <ha-icon-picker
+            label="${control.label}"
+            .value="${control.value ?? card._config[control.configValue] ?? ''}"
+            .configValue="${control.configValue}"
+            @change="${card._valueChanged}">
+        </ha-icon-picker>
+    </div>
+    `;
+}
+
 export const renderFiller = () => {
     return html`<div class="form-control"></div>`;
 }

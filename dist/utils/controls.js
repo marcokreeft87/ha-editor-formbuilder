@@ -1,8 +1,22 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.renderCheckboxes = exports.renderRadio = exports.renderDropdown = exports.renderSwitch = exports.renderTextbox = exports.renderEntityDropdown = exports.renderFiller = void 0;
+exports.renderCheckboxes = exports.renderRadio = exports.renderDropdown = exports.renderSwitch = exports.renderTextbox = exports.renderEntityDropdown = exports.renderFiller = exports.renderIconPicker = void 0;
 const lit_element_1 = require("lit-element");
 const entities_1 = require("./entities");
+const renderIconPicker = (card, control) => {
+    var _a, _b;
+    return (0, lit_element_1.html) `
+    <div class="form-control">
+        <ha-icon-picker
+            label="${control.label}"
+            .value="${(_b = (_a = control.value) !== null && _a !== void 0 ? _a : card._config[control.configValue]) !== null && _b !== void 0 ? _b : ''}"
+            .configValue="${control.configValue}"
+            @change="${card._valueChanged}">
+        </ha-icon-picker>
+    </div>
+    `;
+};
+exports.renderIconPicker = renderIconPicker;
 const renderFiller = () => {
     return (0, lit_element_1.html) `<div class="form-control"></div>`;
 };

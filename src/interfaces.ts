@@ -59,6 +59,7 @@ export enum FormControlType {
     Switch = "switch",
     Textbox = "textbox",
     Filler = "filler",
+    Icon = "icon",
     EntityDropdown = "entity-dropdown"
 }
 

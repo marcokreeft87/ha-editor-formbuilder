@@ -1,5 +1,6 @@
 import { FormControl } from "../interfaces";
 import EditorForm from "../index";
+export declare const renderIconPicker: (card: EditorForm, control: FormControl) => import("lit-html").TemplateResult<1>;
 export declare const renderFiller: () => import("lit-html").TemplateResult<1>;
 export declare const renderEntityDropdown: (card: EditorForm, control: FormControl) => import("lit-html").TemplateResult<1>;
 export declare const renderTextbox: (card: EditorForm, control: FormControl) => import("lit-html").TemplateResult<1>;
