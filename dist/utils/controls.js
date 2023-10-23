@@ -11,7 +11,7 @@ const renderIconPicker = (card, control) => {
             label="${control.label}"
             .value="${(_b = (_a = control.value) !== null && _a !== void 0 ? _a : card._config[control.configValue]) !== null && _b !== void 0 ? _b : ''}"
             .configValue="${control.configValue}"
-            @change="${card._valueChanged}">
+            @value-changed="${card._valueChanged}">
         </ha-icon-picker>
     </div>
     `;
@@ -42,12 +42,13 @@ const renderTextbox = (card, control) => {
 };
 exports.renderTextbox = renderTextbox;
 const renderSwitch = (card, control) => {
+    var _a;
     return (0, lit_element_1.html) `
     <div class="form-control">
         <ha-switch
             id="${control.configValue}"
             name="${control.configValue}"
-            .checked="${card._config[control.configValue]}"
+            .checked="${(_a = control.value) !== null && _a !== void 0 ? _a : card._config[control.configValue]}"
             .configValue="${control.configValue}"
             @change="${card._valueChanged}"
         >

@@ -10,7 +10,7 @@ export const renderIconPicker = (card: EditorForm, control: FormControl) => {
             label="${control.label}"
             .value="${control.value ?? card._config[control.configValue] ?? ''}"
             .configValue="${control.configValue}"
-            @change="${card._valueChanged}">
+            @value-changed="${card._valueChanged}">
         </ha-icon-picker>
     </div>
     `;
@@ -45,7 +45,7 @@ export const renderSwitch = (card: EditorForm, control: FormControl) => {
         <ha-switch
             id="${control.configValue}"
             name="${control.configValue}"
-            .checked="${card._config[control.configValue]}"
+            .checked="${control.value ?? card._config[control.configValue]}"
             .configValue="${control.configValue}"
             @change="${card._valueChanged}"
         >

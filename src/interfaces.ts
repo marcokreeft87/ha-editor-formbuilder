@@ -43,6 +43,7 @@ export interface FormControl {
     cssClass?: string;
     domain?: string;
     value?: string;
+    hidden?: boolean;
 }
 
 export interface FornButton {

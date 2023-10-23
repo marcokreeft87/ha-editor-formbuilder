@@ -47,7 +47,7 @@ export default class EditorForm extends LitElement {
                         this.selectedTabIndex = ev.detail.index;
                         this.requestUpdate();
                     }}>
-                            ${row.tabs.map(tab => html`<mwc-tab label="${tab.label}"></mwc-tab>`)}
+                        ${row.tabs.map(tab => html`<mwc-tab label="${tab.label}"></mwc-tab>`)}
                         </mwc-tab-bar>
                         <section>
                         ${row.tabs.find((_, index) => index == this.selectedTabIndex)?.rows?.map(row => html`<article>${this.renderRow(row)}</article>`)}                        
@@ -57,6 +57,10 @@ export default class EditorForm extends LitElement {
     }
 
     renderControl(control: FormControl): TemplateResult {
+        if(control.hidden) {
+            return renderFiller();
+        }
+
         const renderer = this.controlRenderers[control.type];
         if (!renderer) {
             throw new Error(`Unsupported control type: ${control.type}`);

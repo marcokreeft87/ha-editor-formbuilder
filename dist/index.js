@@ -45,7 +45,7 @@ class EditorForm extends lit_element_1.LitElement {
                 this.selectedTabIndex = ev.detail.index;
                 this.requestUpdate();
             }}>
-                            ${row.tabs.map(tab => (0, lit_element_1.html) `<mwc-tab label="${tab.label}"></mwc-tab>`)}
+                        ${row.tabs.map(tab => (0, lit_element_1.html) `<mwc-tab label="${tab.label}"></mwc-tab>`)}
                         </mwc-tab-bar>
                         <section>
                         ${(_d = (_c = row.tabs.find((_, index) => index == this.selectedTabIndex)) === null || _c === void 0 ? void 0 : _c.rows) === null || _d === void 0 ? void 0 : _d.map(row => (0, lit_element_1.html) `<article>${this.renderRow(row)}</article>`)}                        
@@ -54,6 +54,9 @@ class EditorForm extends lit_element_1.LitElement {
             `;
     }
     renderControl(control) {
+        if (control.hidden) {
+            return (0, controls_1.renderFiller)();
+        }
         const renderer = this.controlRenderers[control.type];
         if (!renderer) {
             throw new Error(`Unsupported control type: ${control.type}`);
