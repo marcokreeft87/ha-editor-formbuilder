@@ -12,4 +12,4 @@ var FormControlType;
     FormControlType["Filler"] = "filler";
     FormControlType["Icon"] = "icon";
     FormControlType["EntityDropdown"] = "entity-dropdown";
-})(FormControlType = exports.FormControlType || (exports.FormControlType = {}));
+})(FormControlType || (exports.FormControlType = FormControlType = {}));

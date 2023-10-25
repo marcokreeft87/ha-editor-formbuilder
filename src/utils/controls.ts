@@ -44,7 +44,7 @@ export const renderSwitch = (card: EditorForm, control: FormControl) => {
     <div class="form-control">
         <ha-switch
             id="${control.configValue}"
-            name="${control.configValue}"
+            name="${control.configValue}[]"
             .checked="${control.value ?? card._config[control.configValue]}"
             .configValue="${control.configValue}"
             @change="${card._valueChanged}"
