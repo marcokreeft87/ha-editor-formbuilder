@@ -97,7 +97,15 @@ export default class EditorForm extends LitElement {
                 }
                 
                 if (info_entities[index]) {
-                    info_entities[index][entity] = target.checked !== undefined || !(detail === null || detail === void 0 ? void 0 : detail.value) ? target.value || target.checked : target.checked || detail.value;
+                    //info_entities[index][entity] = target.checked !== undefined || !(detail === null || detail === void 0 ? void 0 : detail.value) ? target.value || target.checked : target.checked || detail.value;
+                    let isTargetCheckedDefined = target.checked !== undefined;
+                    let isDetailValueDefined = !(detail === null || detail === void 0 ? void 0 : detail.value);
+                    let targetValueOrChecked = target.value || target.checked;
+                    let targetCheckedOrDetailValue = target.checked || (detail ? detail.value : undefined);
+
+                    info_entities[index][entity] = (isTargetCheckedDefined || isDetailValueDefined) ? targetValueOrChecked : targetCheckedOrDetailValue;
+
+                    console.log(entity, info_entities[index][entity]);
                 }
                 else {
                     info_entities.push({
