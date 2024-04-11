@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const custom_card_helpers_1 = require("custom-card-helpers");
-const lit_element_1 = require("lit-element");
+const lit_1 = require("lit");
 const interfaces_1 = require("./interfaces");
 const controls_1 = require("./utils/controls");
-class EditorForm extends lit_element_1.LitElement {
+class EditorForm extends lit_1.LitElement {
     constructor() {
         super(...arguments);
         this.controlRenderers = {
@@ -19,16 +19,17 @@ class EditorForm extends lit_element_1.LitElement {
     }
     setConfig(config) {
         this._config = config;
+        this.requestUpdate("_config");
     }
     set hass(hass) {
         this._hass = hass;
     }
     renderForm(formRows) {
-        return (0, lit_element_1.html) `
+        return (0, lit_1.html) `
             <div class="card-config">
                 ${formRows.map(row => {
             const cssClass = row.cssClass ? `form-row ${row.cssClass}` : "form-row";
-            return row.hidden ? '' : (0, lit_element_1.html) `
+            return row.hidden ? '' : (0, lit_1.html) `
                         <div class="${cssClass}">
                             <label>${row.label}</label>
                             ${row.controls.map(control => this.renderControl(control))}
@@ -88,7 +89,7 @@ class EditorForm extends lit_element_1.LitElement {
         this.requestUpdate("_config");
     }
     static get styles() {
-        return (0, lit_element_1.css) `
+        return (0, lit_1.css) `
             .form-row {
                 margin-bottom: 10px;
             }
