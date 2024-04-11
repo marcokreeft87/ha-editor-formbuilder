@@ -1,4 +1,4 @@
-import { html } from "lit-element";
+import { html } from "lit";
 import { FormControl } from "../interfaces";
 import EditorForm from "../index";
 import { getEntitiesByDomain } from "./entities";

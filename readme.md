@@ -1,12 +1,13 @@
 # Description
-@marcokreeft/ha-editor-formbuilder is a Node.js package that provides a convenient tool for creating easy Home Assistant editor forms for custom cards. It simplifies the process of designing and customizing forms for Home Assistant cards, making it accessible to both developers and non-developers.
+@cybdis/ha-editor-formbuilder is a Node.js package that provides a convenient tool for creating easy Home Assistant editor forms for custom cards. It simplifies the process of designing and customizing forms for Home Assistant cards, making it accessible to both developers and non-developers.
+
 
 ## Installation
 
 Run the following command to install the Custom Card Editor Form Builder using npm:
 
 ```
-npm install -g @marcokreeft/ha-editor-formbuilder
+npm install -g @cybdis/ha-editor-formbuilder
 ```
 
 Once the installation is complete, you can use the tool to create and customize card forms.
@@ -222,3 +223,16 @@ export class FormulaOneCardEditor extends EditorForm {
 }
 
 ```
+
+
+## Remarks 
+Forked from from @marcokreeft/ha-editor-formbuilder - who did a great basic work.
+
+Primary modifications are:  
+- bugfixing
+
+## Support my work ...
+**...with caffeine?**  
+
+<a href="https://www.buymeacoffee.com/cybdis" target="_blank">
+  <img src="https://raw.githubusercontent.com/CybDis/CybDis/main/bmc-yellow-button.png" height="60px"/></a>

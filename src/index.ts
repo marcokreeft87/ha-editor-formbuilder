@@ -1,5 +1,5 @@
 import { HomeAssistant, LovelaceCardConfig, fireEvent } from "custom-card-helpers";
-import { LitElement, TemplateResult, css, html } from "lit-element";
+import { LitElement, TemplateResult, css, html } from "lit";
 import { FormControl, FormControlRow, FormControlType, ValueChangedEvent } from "./interfaces";
 import { renderCheckboxes, renderDropdown, renderFiller, renderRadio, renderSwitch, renderTextbox } from "./utils/controls";
 
@@ -9,6 +9,7 @@ export default class EditorForm extends LitElement {
 
     setConfig(config: LovelaceCardConfig) {
         this._config = config;
+        this.requestUpdate("_config");
     }
 
     set hass(hass: HomeAssistant) {

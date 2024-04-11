@@ -1,15 +1,15 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.renderCheckboxes = exports.renderRadio = exports.renderDropdown = exports.renderSwitch = exports.renderTextbox = exports.renderEntityDropdown = exports.renderFiller = void 0;
-const lit_element_1 = require("lit-element");
+const lit_1 = require("lit");
 const entities_1 = require("./entities");
 const renderFiller = () => {
-    return (0, lit_element_1.html) `<div class="form-control"></div>`;
+    return (0, lit_1.html) `<div class="form-control"></div>`;
 };
 exports.renderFiller = renderFiller;
 const renderEntityDropdown = (card, control) => {
     var _a;
-    return (0, lit_element_1.html) `
+    return (0, lit_1.html) `
     <div class="form-control">
         <ha-entity-picker
             label="${control.label}"
@@ -25,7 +25,7 @@ const renderEntityDropdown = (card, control) => {
 exports.renderEntityDropdown = renderEntityDropdown;
 const renderTextbox = (card, control) => {
     var _a;
-    return (0, lit_element_1.html) `
+    return (0, lit_1.html) `
     <div class="form-control">
         <ha-textfield
             label="${control.label}"
@@ -38,7 +38,7 @@ const renderTextbox = (card, control) => {
 };
 exports.renderTextbox = renderTextbox;
 const renderSwitch = (card, control) => {
-    return (0, lit_element_1.html) `
+    return (0, lit_1.html) `
     <div class="form-control">
         <ha-switch
             id="${control.configValue}"
@@ -56,7 +56,7 @@ exports.renderSwitch = renderSwitch;
 const renderDropdown = (card, control) => {
     var _a;
     const items = (_a = control.items) !== null && _a !== void 0 ? _a : (0, entities_1.getEntitiesByDomain)(card._hass, control.domain);
-    return (0, lit_element_1.html) `  
+    return (0, lit_1.html) `  
     <div class="form-control">
         <ha-combo-box
             label="${control.label}"
@@ -71,11 +71,11 @@ const renderDropdown = (card, control) => {
 };
 exports.renderDropdown = renderDropdown;
 const renderRadio = (card, control) => {
-    return (0, lit_element_1.html) `
+    return (0, lit_1.html) `
         <div class="form-control">
             <label>${control.label}</label>
             ${control.items.map(item => {
-        return (0, lit_element_1.html) `
+        return (0, lit_1.html) `
                     <ha-radio
                         id="${control.configValue}_${item.value}"
                         name="${control.configValue}"
@@ -93,11 +93,11 @@ const renderRadio = (card, control) => {
 };
 exports.renderRadio = renderRadio;
 const renderCheckboxes = (card, control) => {
-    return (0, lit_element_1.html) `
+    return (0, lit_1.html) `
         <label>${control.label}</label>
         ${control.items.map(item => {
         var _a;
-        return (0, lit_element_1.html) `                
+        return (0, lit_1.html) `                
             <div class="form-control">
                 <ha-checkbox
                     id="${control.configValue}_${item.value}"

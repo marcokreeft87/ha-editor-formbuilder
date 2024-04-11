@@ -1,5 +1,5 @@
 import { HomeAssistant, LovelaceCardConfig } from "custom-card-helpers";
-import { LitElement, TemplateResult } from "lit-element";
+import { LitElement, TemplateResult } from "lit";
 import { FormControl, FormControlRow, ValueChangedEvent } from "./interfaces";
 export default class EditorForm extends LitElement {
     _hass: HomeAssistant;
@@ -18,5 +18,5 @@ export default class EditorForm extends LitElement {
     };
     renderControl(control: FormControl): TemplateResult;
     _valueChanged(ev: ValueChangedEvent): void;
-    static get styles(): import("lit-element").CSSResult;
+    static get styles(): import("lit").CSSResult;
 }
