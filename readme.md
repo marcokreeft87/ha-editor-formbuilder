@@ -7,7 +7,7 @@ ha-editor-formbuilder is a Node.js package that provides a convenient tool for c
 Run the following command to install the Custom Card Editor Form Builder using npm:
 
 ```
-npm install -g @cybdis/ha-editor-formbuilder
+npm install -g @marcokreeft87/ha-editor-formbuilder
 ```
 
 Once the installation is complete, you can use the tool to create and customize card forms.
