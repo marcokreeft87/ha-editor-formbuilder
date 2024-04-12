@@ -1,5 +1,5 @@
 {
-  "name": "@marcokreeft87/ha-editor-formbuilder",
+  "name": "@marcokreeft/ha-editor-formbuilder",
   "version": "2024.4.1",
   "description": "A form builder helper for Home Assistant custom card editor forms",
   "main": "dist/index.js",
@@ -22,7 +22,7 @@
     "Form",
     "Builder"
   ],
-  "author": "Stefan Miedl, Marco Kreeft",
+  "author": "Marco Kreeft, Stefan Miedl",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/marcokreeft87/ha-editor-formbuilder/issues"
