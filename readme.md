@@ -223,16 +223,3 @@ export class FormulaOneCardEditor extends EditorForm {
 }
 
 ```
-
-
-## Remarks 
-Forked from from @marcokreeft/ha-editor-formbuilder - who did a great basic work.
-
-Primary modifications are:  
-- bugfixing
-
-## Support my work ...
-**...with caffeine?**  
-
-<a href="https://www.buymeacoffee.com/cybdis" target="_blank">
-  <img src="https://raw.githubusercontent.com/CybDis/CybDis/main/bmc-yellow-button.png" height="60px"/></a>
