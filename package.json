@@ -12,7 +12,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/cybdis/ha-editor-formbuilder.git"
+    "url": "git+https://github.com/marcokreeft87/ha-editor-formbuilder.git"
   },
   "keywords": [
     "Home",
@@ -25,9 +25,9 @@
   "author": "Stefan Miedl, Marco Kreeft",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/cybdis/ha-editor-formbuilder/issues"
+    "url": "https://github.com/marcokreeft87/ha-editor-formbuilder/issues"
   },
-  "homepage": "https://github.com/cybdis/ha-editor-formbuilder#readme",
+  "homepage": "https://github.com/marcokreeft87/ha-editor-formbuilder#readme",
   "dependencies": {
     "custom-card-helpers": "^1.9.0",
     "lit": "^3.1.2",
