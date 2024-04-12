@@ -15,16 +15,19 @@ on:
 jobs:
   publish:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write # allow GITHUB_TOKEN to publish packages
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
         with:
-          node-version: "18"
+          node-version: "20"
       - name: Check for version change
         id: version-check
         run: echo "version=$(jq -r .version package.json)" >> $GITHUB_OUTPUT
       - run: npm ci
-      - uses: JS-DevTools/npm-publish@v2
+      - uses: JS-DevTools/npm-publish@v3
         with:
           access: public
           token: ${{ secrets.npm_token }}
