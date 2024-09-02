@@ -31,6 +31,7 @@ const renderTextbox = (card, control) => {
             label="${control.label}"
             .value="${(_a = card._config[control.configValue]) !== null && _a !== void 0 ? _a : ''}"
             .configValue="${control.configValue}"
+            @input="${card._valueChanged}"
             @change="${card._valueChanged}">
         </ha-textfield>
     </div>

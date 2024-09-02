@@ -29,6 +29,7 @@ export const renderTextbox = (card: EditorForm, control: FormControl) => {
             label="${control.label}"
             .value="${card._config[control.configValue] ?? ''}"
             .configValue="${control.configValue}"
+            @input="${card._valueChanged}"
             @change="${card._valueChanged}">
         </ha-textfield>
     </div>
