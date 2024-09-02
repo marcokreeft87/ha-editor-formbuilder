@@ -1,5 +1,6 @@
 import { FormControl } from "../interfaces";
 import EditorForm from "../index";
+export declare function deepMerge<T>(target: T, source: T): T;
 export declare const renderFiller: () => import("lit").TemplateResult<1>;
 export declare const renderEntityDropdown: (card: EditorForm, control: FormControl) => import("lit").TemplateResult<1>;
 export declare const renderTextbox: (card: EditorForm, control: FormControl) => import("lit").TemplateResult<1>;

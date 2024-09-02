@@ -4,6 +4,7 @@ const custom_card_helpers_1 = require("custom-card-helpers");
 const lit_1 = require("lit");
 const interfaces_1 = require("./interfaces");
 const controls_1 = require("./utils/controls");
+const controls_2 = require("./utils/controls"); // Import deepMerge
 class EditorForm extends lit_1.LitElement {
     constructor() {
         super(...arguments);
@@ -54,38 +55,60 @@ class EditorForm extends lit_1.LitElement {
         const detail = ev.detail;
         if (target.tagName === "HA-CHECKBOX") {
             // Add or remove the value from the array
-            const index = this._config[target.configValue].indexOf(target.value);
+            const keys = target.configValue.split(".");
+            let config = { ...this._config }; // Create a shallow copy of the config
+            let nestedConfig = config;
+            for (let i = 0; i < keys.length - 1; i++) {
+                if (!nestedConfig[keys[i]]) {
+                    nestedConfig[keys[i]] = {};
+                }
+                nestedConfig = nestedConfig[keys[i]];
+            }
+            const arrayKey = keys[keys.length - 1];
+            if (!Array.isArray(nestedConfig[arrayKey])) {
+                nestedConfig[arrayKey] = [];
+            }
+            const index = nestedConfig[arrayKey].indexOf(target.value);
             if (target.checked && index < 0) {
-                this._config[target.configValue] = [...this._config[target.configValue], target.value];
+                nestedConfig[arrayKey].push(target.value);
             }
             else if (!target.checked && index > -1) {
-                this._config[target.configValue] = [...this._config[target.configValue].slice(0, index), ...this._config[target.configValue].slice(index + 1)];
+                nestedConfig[arrayKey].splice(index, 1);
             }
+            // Remove the key if the array is empty
+            if (nestedConfig[arrayKey].length === 0) {
+                delete nestedConfig[arrayKey];
+            }
+            this._config = (0, controls_2.deepMerge)(this._config, config);
         }
         else if (target.configValue) {
-            if (target.configValue.indexOf(".") > -1) {
-                const [domain, configValue] = target.configValue.split(".");
-                this._config = {
-                    ...this._config,
-                    [domain]: {
-                        ...this._config[domain],
-                        [configValue]: target.checked
-                    }
-                };
+            const keys = target.configValue.split(".");
+            let config = { ...this._config }; // Create a shallow copy of the config
+            let nestedConfig = config;
+            for (let i = 0; i < keys.length - 1; i++) {
+                if (!nestedConfig[keys[i]]) {
+                    nestedConfig[keys[i]] = {};
+                }
+                nestedConfig = nestedConfig[keys[i]];
+            }
+            const lastKey = keys[keys.length - 1];
+            const newValue = target.checked !== undefined || !(detail === null || detail === void 0 ? void 0 : detail.value) ? target.value || target.checked : target.checked || detail.value;
+            if (newValue === "" || newValue === null || newValue === undefined) {
+                delete nestedConfig[lastKey];
             }
             else {
-                this._config = {
-                    ...this._config,
-                    [target.configValue]: target.checked !== undefined || !(detail === null || detail === void 0 ? void 0 : detail.value) ? target.value || target.checked : target.checked || detail.value,
-                };
+                nestedConfig[lastKey] = newValue;
             }
+            this._config = (0, controls_2.deepMerge)(this._config, config);
         }
+        // Fire the config-changed event
         (0, custom_card_helpers_1.fireEvent)(this, "config-changed", {
             config: this._config,
         }, {
             bubbles: true,
             composed: true,
         });
+        // Request an update to reflect the changes
         this.requestUpdate("_config");
     }
     static get styles() {
