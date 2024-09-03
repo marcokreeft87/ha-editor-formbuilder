@@ -4,7 +4,7 @@ const custom_card_helpers_1 = require("custom-card-helpers");
 const lit_1 = require("lit");
 const interfaces_1 = require("./interfaces");
 const controls_1 = require("./utils/controls");
-const controls_2 = require("./utils/controls"); // Import deepMerge
+const controls_2 = require("./utils/controls");
 class EditorForm extends lit_1.LitElement {
     constructor() {
         super(...arguments);
@@ -27,18 +27,18 @@ class EditorForm extends lit_1.LitElement {
     }
     renderForm(formRows) {
         return (0, lit_1.html) `
-            <div class="card-config">
-                ${formRows.map(row => {
+			<div class="card-config">
+				${formRows.map(row => {
             const cssClass = row.cssClass ? `form-row ${row.cssClass}` : "form-row";
             return row.hidden ? '' : (0, lit_1.html) `
-                        <div class="${cssClass}">
-                            <label>${row.label}</label>
-                            ${row.controls.map(control => this.renderControl(control))}
-                        </div>
-                        `;
-        })}            
-            </div>
-            `;
+						<div class="${cssClass}">
+							<label>${row.label}</label>
+							${row.controls.map(control => this.renderControl(control))}
+						</div>
+						`;
+        })}          	 
+			</div>
+			`;
     }
     renderControl(control) {
         const renderer = this.controlRenderers[control.type];
@@ -101,43 +101,41 @@ class EditorForm extends lit_1.LitElement {
             }
             this._config = (0, controls_2.deepMerge)(this._config, config);
         }
-        // Fire the config-changed event
         (0, custom_card_helpers_1.fireEvent)(this, "config-changed", {
             config: this._config,
         }, {
             bubbles: true,
             composed: true,
         });
-        // Request an update to reflect the changes
         this.requestUpdate("_config");
     }
     static get styles() {
         return (0, lit_1.css) `
-            .form-row {
-                margin-bottom: 10px;
-            }
-            .form-control {
-                display: flex;
-                align-items: center;
-            }
-            ha-switch {
-                padding: 16px 6px;
-            }
-            .side-by-side {
-                display: flex;
-                flex-flow: row wrap;
-            }            
-            .side-by-side > label {
-                width: 100%;
-            }
-            .side-by-side > .form-control {
-                width: 49%;
-                padding: 2px;
-            }
-            ha-textfield { 
-                width: 100%;
-            }
-        `;
+			.form-row {
+				margin-bottom: 10px;
+			}
+			.form-control {
+				display: flex;
+				align-items: center;
+			}
+			ha-switch {
+				padding: 16px 6px;
+			}
+			.side-by-side {
+				display: flex;
+				flex-flow: row wrap;
+			}            
+			.side-by-side > label {
+				width: 100%;
+			}
+			.side-by-side > .form-control {
+				width: 49%;
+				padding: 2px;
+			}
+			ha-textfield { 
+				width: 100%;
+			}
+		`;
     }
 }
 exports.default = EditorForm;
