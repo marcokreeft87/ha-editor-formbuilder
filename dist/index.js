@@ -27,18 +27,18 @@ class EditorForm extends lit_1.LitElement {
     }
     renderForm(formRows) {
         return (0, lit_1.html) `
-			<div class="card-config">
-				${formRows.map(row => {
+            <div class="card-config">
+                ${formRows.map(row => {
             const cssClass = row.cssClass ? `form-row ${row.cssClass}` : "form-row";
             return row.hidden ? '' : (0, lit_1.html) `
-						<div class="${cssClass}">
-							<label>${row.label}</label>
-							${row.controls.map(control => this.renderControl(control))}
-						</div>
-						`;
+                        <div class="${cssClass}">
+                            <label>${row.label}</label>
+                            ${row.controls.map(control => this.renderControl(control))}
+                        </div>
+                        `;
         })}          	 
-			</div>
-			`;
+            </div>
+            `;
     }
     renderControl(control) {
         const renderer = this.controlRenderers[control.type];
@@ -111,31 +111,31 @@ class EditorForm extends lit_1.LitElement {
     }
     static get styles() {
         return (0, lit_1.css) `
-			.form-row {
-				margin-bottom: 10px;
-			}
-			.form-control {
-				display: flex;
-				align-items: center;
-			}
-			ha-switch {
-				padding: 16px 6px;
-			}
-			.side-by-side {
-				display: flex;
-				flex-flow: row wrap;
-			}            
-			.side-by-side > label {
-				width: 100%;
-			}
-			.side-by-side > .form-control {
-				width: 49%;
-				padding: 2px;
-			}
-			ha-textfield { 
-				width: 100%;
-			}
-		`;
+            .form-row {
+                margin-bottom: 10px;
+            }
+            .form-control {
+                display: flex;
+                align-items: center;
+            }
+            ha-switch {
+                padding: 16px 6px;
+            }
+            .side-by-side {
+                display: flex;
+                flex-flow: row wrap;
+            }            
+            .side-by-side > label {
+                width: 100%;
+            }
+            .side-by-side > .form-control {
+                width: 49%;
+                padding: 2px;
+            }
+            ha-textfield { 
+                width: 100%;
+            }
+        `;
     }
 }
 exports.default = EditorForm;
