@@ -53,14 +53,25 @@ class EditorForm extends lit_1.LitElement {
         const target = ev.target;
         const detail = ev.detail;
         if (target.tagName === "HA-CHECKBOX") {
-            // Add or remove the value from the array
             const index = this._config[target.configValue].indexOf(target.value);
+            let newConfigValue;
             if (target.checked && index < 0) {
-                this._config[target.configValue] = [...this._config[target.configValue], target.value];
+                newConfigValue = [...this._config[target.configValue], target.value];
             }
             else if (!target.checked && index > -1) {
-                this._config[target.configValue] = [...this._config[target.configValue].slice(0, index), ...this._config[target.configValue].slice(index + 1)];
+                newConfigValue = [
+                    ...this._config[target.configValue].slice(0, index),
+                    ...this._config[target.configValue].slice(index + 1)
+                ];
             }
+            else {
+                newConfigValue = this._config[target.configValue];
+            }
+            // Set the new immutable config
+            this._config = {
+                ...this._config,
+                [target.configValue]: newConfigValue
+            };
         }
         else if (target.configValue) {
             if (target.configValue.indexOf(".") > -1) {
