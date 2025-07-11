@@ -1,7 +1,7 @@
 import { HomeAssistant, LovelaceCardConfig, fireEvent } from "custom-card-helpers";
-import { LitElement, TemplateResult, css, html } from "lit-element";
+import { LitElement, TemplateResult, css, html } from "lit";
 import { FormControl, FormControlRow, FormControlType, ValueChangedEvent, mwcTabBarEvent } from "./interfaces";
-import { renderCheckboxes, renderDropdown, renderEntityDropdown, renderFiller, renderRadio, renderSwitch, renderTextbox, renderIconPicker } from "./utils/controls";
+import { renderCheckboxes, renderDropdown, renderEntityDropdown, renderFiller, renderIconPicker, renderRadio, renderSwitch, renderTextbox } from "./utils/controls";
 
 export default class EditorForm extends LitElement {
     _hass: HomeAssistant;
